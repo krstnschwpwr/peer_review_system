@@ -1,0 +1,8 @@
+# Files to ignore when adding and committing files to a repository
+.DS_Store
+database.db
+
+*.py[cod]
+*$py.class
+
+.idea/
