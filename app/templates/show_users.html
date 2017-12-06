@@ -1,7 +1,11 @@
+{% extends "layout/base.html" %}
 
-{% block main %}
+{% block title %} <h1 class="intro_title">Thanks!</h1> {% endblock %}
+
+
+
+{% block content %}
 <div class="container">
-  <h1 class="page-header">Show Users</h1>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       <div class="alert alert-success">
@@ -10,10 +14,10 @@
     {% endif %}
   {% endwith %}
 
-  <ul>
+  <ol>
     {% for user in users %}
-    <li>{{ user.name }}</li>
+    <li>{{ user.name }} - {{user.email}} - {{user.password}}</li>
     {% endfor %}
-  </ul>
+  </ol>
 </div>
 {% endblock %}

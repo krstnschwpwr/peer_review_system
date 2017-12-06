@@ -1,0 +1,10 @@
+.section--intro{
+    padding-top: 4.5rem;
+    padding-bottom: 4.5rem;
+       text-align: center;
+    border-bottom: 1px solid #cae6ff;
+    background-color: #e3f2ff;
+}
+.section-components{
+    margin-top: 7em;
+}

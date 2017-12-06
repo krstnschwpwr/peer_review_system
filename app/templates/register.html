@@ -1,0 +1,56 @@
+{% extends "layout/base.html" %}
+
+{% block title %} <h1 class="intro_title">Sign up for a PRS!</h1> {% endblock %}
+
+{% block content %}
+<section class="section-components">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+  <form class="form-signin" role="form" method="post" action="">
+  {{ form.csrf_token }}
+  <p>
+    {{ form.name(placeholder="username") }}
+    <span class="error">
+      {% if form.name.errors %}
+        {% for error in form.name.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <p>
+       {{ form.email(placeholder="email") }}
+    <span class="error">
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <p>
+  {{ form.password(placeholder="password") }}
+    <span class="error">
+      {% if form.password.errors %}
+        {% for error in form.password.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <button class="btn btn-sm btn-success" type="submit">Sign in</button>
+</form>
+
+</section>
+{% endblock %}
