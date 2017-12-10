@@ -3,7 +3,7 @@
 {% block title %}
 {% if current_user.is_authenticated %}
  <a href="/logout"><button class="btn btn-link orange btn-success">Logout</button></a>
- <a href="/paper"><button class="btn btn-link orange btn-success">Create a Paper</button></a>
+ <a href="/paper/new"><button class="btn btn-link orange btn-success">  Create New Paper</button></a>
 
     <h1 class="intro_title">Hi {{ current_user.name }} !</h1>
 {% endif %}
@@ -11,6 +11,9 @@
 
 {% block content %}
 <section class="section-components">
+
+
+
 
 </section>
 {% endblock %}
