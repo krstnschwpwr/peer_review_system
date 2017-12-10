@@ -13,7 +13,7 @@ class User(db.Model):
     name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
-   # papers = relationship("Paper", backref="reviewer", nullable=True)
+    papers = db.relationship("Paper", backref="reviewer", lazy="dynamic")
 
     def __init__(self, name, email, password):
         self.name = name
@@ -49,8 +49,12 @@ class Paper(db.Model):
     abstract = db.Column(db.String, nullable=False)
     reviewer_id =db.Column(db.Integer, ForeignKey('users.id'))
 
-    def __init__(self, title, abstract):
+    def __init__(self, title, abstract, reviewer_id):
         self.title = title
         self.abstract = abstract
+        self.reviewer_id = reviewer_id
+
+    def __repr__(self):
+        return '<Paper:{}>'.format(self.title)
 
 db.create_all()

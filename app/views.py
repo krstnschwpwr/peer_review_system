@@ -75,12 +75,18 @@ def get_users():
   return jsonify(users=users_schema.dump(users).data)
 
 @app.route('/api/user/<int:id>', methods=['GET'])
-def get_space(id):
+def get_user(id):
     user = User.query.get(id)
     if not user:
         abort(404)
     return jsonify(user_schema.dump(user).data)
 
+# @app.route('/api/user/<int:id>/paper/<int:id>', methods=['GET'])
+# def get_users_paper(id):
+#     user = User.query.get(id)
+#     if not user:
+#         abort(404)
+#     return jsonify(user_schema.dump(user).data)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port="8080")
