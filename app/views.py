@@ -2,8 +2,8 @@ from app import app, db, lm
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort
 from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm
-from app.models import User, bcrypt
-from app.schema import users_schema, user_schema
+from app.models import User, bcrypt, Paper
+from app.schema import users_schema, user_schema, paper_schema, papers_schema
 
 
 
@@ -67,6 +67,34 @@ def logout():
     session['logged_in'] = False
     return home()
 
+#CRUD
+@app.route('/paper/new')
+def new_page():
+    return render_template('newpaper.html')
+
+@app.route('/paper/save', methods=['POST'])
+def save_page():
+    paper = Paper(title=request.form['title'],
+                 content=request.form['abstract'])
+    db.session.add(paper)
+    db.session.commit()
+    return redirect('/page/%d' % paper.id)
+
+@app.route('/paper/delete/<int:paper_id>')
+def delete_paper(paper_id):
+    db.session.query(Paper).filter_by(id=paper_id).delete()
+    db.session.commit()
+    return redirect('/')
+
+@app.route('/paper/update', methods=['POST'])
+def update_page():
+    paper_id = request.form['id']
+    title = request.form['title']
+    abstract = request.form['abstract']
+    db.session.query(Paper).filter_by(id=paper_id).update({'title': title,
+                                                          'abstract': abstract})
+    db.session.commit()
+    return redirect('/page/'+paper_id)
 #API
 
 @app.route('/api/users', methods=['GET'])
@@ -80,6 +108,20 @@ def get_user(id):
     if not user:
         abort(404)
     return jsonify(user_schema.dump(user).data)
+
+
+@app.route('/api/papers', methods=['GET'])
+def get_papers():
+  papers = Paper.query.all()
+  return jsonify(papers=papers_schema.dump(papers).data)
+
+@app.route('/api/paper/<int:id>', methods=['GET'])
+def get_paper(id):
+    paper = Paper.query.get(id)
+    if not paper:
+        abort(404)
+    return jsonify(paper_schema.dump(paper).data)
+
 
 # @app.route('/api/user/<int:id>/paper/<int:id>', methods=['GET'])
 # def get_users_paper(id):
