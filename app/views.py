@@ -1,19 +1,20 @@
 from app import app, db, lm
-from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, login_required, logout_user
+from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort
+from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm
 from app.models import User, bcrypt
+from app.schema import users_schema, user_schema
 
-###
-# Routing for your application.
-###
+
+
+
 
 @app.route('/')
 def home():
     """Render website's home page."""
     return render_template('home.html')
 
-@app.route('/register', methods=['POST', 'GET'])
+@app.route('/api/user/add', methods=['POST', 'GET'])
 def register():
     user_form = RegisterForm()
 
@@ -30,26 +31,20 @@ def register():
             db.session.commit()
             login_user(user)
             flash('User successfully added')
-            return redirect(url_for('show_users'))
+            return redirect(url_for('home'))
 
-    flash_errors(user_form)
+            flash_errors(user_form)
 
     return render_template('register.html', form=user_form)
 
-# Flash errors from the form if validation fails
-def flash_errors(form):
-    for field, errors in form.errors.items():
-        for error in errors:
-            flash(u"Error in the %s field - %s" % (
-                getattr(form, field).label.text,
-                error
-            ))
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    error = None
+    #if current_user.is_authenticated():
+     #   return redirect(url_for('home'))
     form = LoginForm(request.form)
+    error = None
     if request.method == 'POST':
         if form.validate_on_submit():
             user = User.query.filter_by(name=request.form['name']).first()
@@ -57,19 +52,34 @@ def login():
                     user.password, request.form['password']
             ):
                 login_user(user)
-                flash('You were logged in. Go Crazy.')
+                flash('Hi' + 'You just signed up')
+                session['logged_in'] = True
                 return render_template('mypage.html')
 
             else:
                 error = 'Invalid username or password.'
     return render_template('login.html', form=form, error=error)
 
-@app.route('/users')
-def show_users():
-    users = db.session.query(User).all() # or you could have used User.query.all()
 
-    return render_template('show_users.html', users=users)
+@app.route("/logout")
+def logout():
+    logout_user()
+    session['logged_in'] = False
+    return home()
 
+#API
+
+@app.route('/api/users', methods=['GET'])
+def get_users():
+  users = User.query.all()
+  return jsonify(users=users_schema.dump(users).data)
+
+@app.route('/api/user/<int:id>', methods=['GET'])
+def get_space(id):
+    user = User.query.get(id)
+    if not user:
+        abort(404)
+    return jsonify(user_schema.dump(user).data)
 
 
 if __name__ == '__main__':
