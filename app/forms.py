@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, TextAreaField
 from wtforms.validators import InputRequired, DataRequired
 
 
@@ -16,4 +16,4 @@ class LoginForm(Form):
 
 class PaperForm(Form):
     title = StringField('title', validators=[InputRequired()])
-    abstract = StringField('abstract', validators=[InputRequired()])
+    abstract = TextAreaField('abstract', validators=[InputRequired()])
