@@ -1,4 +1,4 @@
-from app import db
+from app import db, lm
 from sqlalchemy.orm import relationship
 from sqlalchemy import ForeignKey
 from app import bcrypt
@@ -13,13 +13,12 @@ class User(db.Model):
     name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
-    papers = relationship("Paper", backref="reviewer")
+   # papers = relationship("Paper", backref="reviewer", nullable=True)
 
     def __init__(self, name, email, password):
         self.name = name
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
-
 
     def is_authenticated(self):
         return True
@@ -33,8 +32,12 @@ class User(db.Model):
     def get_id(self):
         return str(self.id)
 
+    @lm.user_loader
+    def load_user(user_id):
+        return User.query.filter(User.id == int(user_id)).first()
+
     def __repr__(self):
-        return '<User %r>' % self.name
+        return 'Users {}>'.format(self.id)
 
 
 class Paper(db.Model):
@@ -49,3 +52,5 @@ class Paper(db.Model):
     def __init__(self, title, abstract):
         self.title = title
         self.abstract = abstract
+
+db.create_all()
