@@ -1,10 +1,9 @@
-from app import app, db, lm
+from app import app, db, auth
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort
 from flask_login import login_user, login_required, logout_user, current_user, session
-from app.forms import RegisterForm, LoginForm
+from app.forms import RegisterForm, LoginForm, PaperForm
 from app.models import User, bcrypt, Paper
 from app.schema import users_schema, user_schema, paper_schema, papers_schema
-
 
 
 
@@ -32,7 +31,6 @@ def register():
             login_user(user)
             flash('User successfully added')
             return redirect(url_for('home'))
-
             flash_errors(user_form)
 
     return render_template('register.html', form=user_form)
@@ -54,7 +52,7 @@ def login():
                 login_user(user)
                 flash('Hi' + 'You just signed up')
                 session['logged_in'] = True
-                return render_template('mypage.html')
+                return redirect('/mypage')
 
             else:
                 error = 'Invalid username or password.'
@@ -66,27 +64,48 @@ def logout():
     logout_user()
     session['logged_in'] = False
     return home()
+#
+# #CRUD
+# @app.route('/paper/new')
+# #@auth.login_required
+# def new_page():
+#     return render_template('newpaper.html')
 
-#CRUD
-@app.route('/paper/new')
-def new_page():
-    return render_template('newpaper.html')
 
-@app.route('/paper/save', methods=['POST'])
+@app.route('/mypage')
+#auth.login_required
+def index():
+    return render_template('mypage.html')
+
+
+@app.route('/paper/new', methods=['GET', 'POST'])
 def save_page():
-    paper = Paper(title=request.form['title'],
-                 content=request.form['abstract'])
-    db.session.add(paper)
-    db.session.commit()
-    return redirect('/page/%d' % paper.id)
+    paper_form = PaperForm()
+
+    if request.method == 'POST':
+        if paper_form.validate_on_submit():
+            # Get validated data from form
+            title = paper_form.title.data
+            abstract = paper_form.abstract.data
+            paper = Paper(title, abstract, 1)
+            db.session.add(paper)
+            db.session.commit()
+            flash('Paper successfully added')
+        return redirect('mypage')
+
+    return render_template('newpaper.html', form=paper_form)
+
+
 
 @app.route('/paper/delete/<int:paper_id>')
+#@auth.login_required
 def delete_paper(paper_id):
     db.session.query(Paper).filter_by(id=paper_id).delete()
     db.session.commit()
     return redirect('/')
 
 @app.route('/paper/update', methods=['POST'])
+#@auth.login_required
 def update_page():
     paper_id = request.form['id']
     title = request.form['title']
@@ -98,6 +117,7 @@ def update_page():
 #API
 
 @app.route('/api/users', methods=['GET'])
+#@auth.login_required
 def get_users():
   users = User.query.all()
   return jsonify(users=users_schema.dump(users).data)

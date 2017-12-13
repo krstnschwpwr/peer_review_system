@@ -1,7 +1,9 @@
 from app import db, lm
 from sqlalchemy.orm import relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, Integer
 from app import bcrypt
+
+
 
 
 

@@ -2,44 +2,46 @@
 
 {% block title %}
 {% if current_user.is_authenticated %}
- <a href="/logout"><button class="btn btn-link orange btn-success">Logout</button></a>
+<a href="/logout">
+    <button class="btn btn-link orange btn-success">Logout</button>
+</a>
 
 
-
-
-    <h1 class="intro_title">Hi {{ current_user.name }} !</h1>
+<h1 class="intro_title">Hi {{ current_user.name }} !</h1>
 {% endif %}
 {% endblock %}
 
 {% block content %}
 <section class="section-components">
- <br/>
-	<br/>
-	<form action="{{ url_for('save_page') }}" method="POST">
-		<input placeholder="Enter title here.." type="text" name="title"/>
-		<br/>
-		<br/>
 
-		<!-- WYSIWYG editor -->
-		<div id="toolbar">
-		  <a class="label label-primary" data-wysihtml5-command="bold">bold</a>
-		  <a class="label label-primary" data-wysihtml5-command="italic">italic</a>
-		  <a class="label label-primary" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="h1">H1</a>
-		  <a class="label label-primary" data-wysihtml5-command="formatBlock" data-wysihtml5-command-value="p">P</a>
-		</div>
-		<textarea id="editor" rows="20", cols="100" name="content" data-placeholder="Enter content here..">
-		</textarea>
+    <br/>
+    <br/>
+ <form class="form-signin" role="form" method="post" action="">
+       {{ form.csrf_token }}
 
-		<br/>
-		<input type="submit" class="btn btn-info" value="Submit"/>
-	</form>
+       {{ form.title(placeholder="email") }}
+    <span class="error">
+      {% if form.title.errors %}
+        {% for error in form.title.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <p>
+  {{ form.abstract(placeholder="password") }}
+    <span class="error">
+      {% if form.abstract.errors %}
+        {% for error in form.abstract.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <button class="btn btn-sm btn-success" type="submit">Sign in</button>
+</form>
 
-	<script>
-	  var editor = new wysihtml5.Editor('editor', {
-	    toolbar: 'toolbar',
-	    parserRules:  wysihtml5ParserRules
-	  });
-	</script>
+
 
 </section>
 {% endblock %}

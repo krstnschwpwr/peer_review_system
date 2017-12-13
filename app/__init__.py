@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_marshmallow import Marshmallow
+from flask_httpauth import HTTPBasicAuth
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -15,6 +16,9 @@ SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+
+
+auth = HTTPBasicAuth()
 
 lm = LoginManager()
 lm.init_app(app)
