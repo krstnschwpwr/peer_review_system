@@ -1,7 +1,8 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, TextAreaField
+from wtforms import StringField, PasswordField, TextAreaField, SelectField
 from wtforms.validators import InputRequired, DataRequired
 
+REVIEW_STATUS = (('Under Review', 'Accepted', 'Rejected'))
 
 class RegisterForm(Form):
     name = StringField('Name', validators=[InputRequired()])
@@ -17,3 +18,6 @@ class LoginForm(Form):
 class PaperForm(Form):
     title = StringField('title', validators=[InputRequired()])
     abstract = TextAreaField('abstract', validators=[InputRequired()])
+    status = SelectField('Status', choices=[('0', 'Under Review'),
+                                                 ('1', 'Accepted'),
+                                            ('2', "Rejected")])

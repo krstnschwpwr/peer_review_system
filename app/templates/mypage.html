@@ -2,26 +2,31 @@
 
 {% block title %}
 {% if current_user.is_authenticated %}
- <a href="/logout"><button class="btn btn-link orange btn-success">Logout</button></a>
- <a href="/paper/new"><button class="btn btn-link orange btn-success">  Create New Paper</button></a>
+<a href="/logout">
+    <button class="btn btn-link orange btn-success">Logout</button>
+</a>
+<a href="/paper/new">
+    <button class="btn btn-link orange btn-success"> Create New Paper</button>
+</a>
 
-    <h1 class="intro_title">Hi {{ current_user.name }} !</h1>
+<h1 class="intro_title">Hi {{ current_user.name }} !</h1>
 {% endif %}
 {% endblock %}
 
 {% block content %}
 <section class="section-components mypage">
 
-<div class="mypapers">
-    <h3> My Papers</h3>
-    <div class="list"></div>
-</div>
+    <div class="mypapers">
+        <h3> My Papers</h3>
+        <ul class="list"></ul>
+
+        </div>
 
 
-<div class="review">
-    <h3> Papers to review</h3>
-    <div class="list"></div>
-</div>
+        <div class="review">
+            <h3> Papers to review</h3>
+            <div class="list"></div>
+        </div>
 
 
 </section>
@@ -29,6 +34,6 @@
 
 
 {% block additional_scripts %}
-   <script type="text/javascript" src="/static/js/mypage.js"></script>
+<script type="text/javascript" src="/static/js/mypage.js"></script>
 {% endblock %}
 

@@ -1,6 +1,7 @@
 from app import db, lm
 from sqlalchemy.orm import relationship
-from sqlalchemy import ForeignKey, Integer
+from sqlalchemy import ForeignKey, Enum
+
 from app import bcrypt
 
 
@@ -43,6 +44,7 @@ class User(db.Model):
 
 
 class Paper(db.Model):
+    REVIEW_STATUS = ((0, 'Under Review'), (1, 'Accepted'), (2, 'Rejected'))
 
     __tablename__ = "papers"
 
@@ -50,14 +52,15 @@ class Paper(db.Model):
     title = db.Column(db.String(255), nullable=False)
     abstract = db.Column(db.String, nullable=False)
     reviewer_id =db.Column(db.Integer, ForeignKey('users.id'))
+    status = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, title, abstract, reviewer_id):
+    def __init__(self, title, abstract, reviewer_id, status):
         self.title = title
         self.abstract = abstract
         self.reviewer_id = reviewer_id
+        self.status = status
+
 
     def __repr__(self):
         return '<Paper:{}>'.format(self.title)
 
-
-db.create_all()

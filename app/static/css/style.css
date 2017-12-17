@@ -8,4 +8,13 @@
 .section-components{
     margin-top: 7em;
 }
-.list div{ border-radius: 10px; border: 1px solid grey; padding: 1.5em;}
+.list { margin-top: 5em; margin-bottom: 5em; min-height: 13em; clear: both;}
+
+
+.mypapers{ width: 100%; float: left;}
+.option a{ float: left; margin-right: 10px;}
+.cf { clear: both;}
+span.status{ background: #cecbcb; color: white; padding: .3em .7em; margin-top: 2em;font-size: .7em;
+    margin-left: 1em;}
+ul{ list-style: none; padding-left: 0;}
+.content{ margin-bottom: 5em;}
