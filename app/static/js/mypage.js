@@ -17,7 +17,6 @@ $(document).ready(function () {
         });
     };
 
-
     function loadPapers() {
         $.ajax({
             url: '/api/papers',
