@@ -111,7 +111,7 @@ def save_page():
             title = paper_form.title.data
             abstract = paper_form.abstract.data
             status = paper_form.status.data
-            paper = Paper(title, abstract, status)
+            paper = Paper(title, abstract, reviewer_id=1, status="Rejected")
             db.session.add(paper)
             db.session.commit()
             flash('Paper successfully added')
