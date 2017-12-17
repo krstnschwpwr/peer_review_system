@@ -8,3 +8,4 @@
 .section-components{
     margin-top: 7em;
 }
+.list div{ border-radius: 10px; border: 1px solid grey; padding: 1.5em;}

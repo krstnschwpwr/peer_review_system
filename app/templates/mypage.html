@@ -10,12 +10,25 @@
 {% endblock %}
 
 {% block content %}
-<section class="section-components">
+<section class="section-components mypage">
+
+<div class="mypapers">
+    <h3> My Papers</h3>
+    <div class="list"></div>
+</div>
 
 
+<div class="review">
+    <h3> Papers to review</h3>
+    <div class="list"></div>
+</div>
 
 
 </section>
 {% endblock %}
 
+
+{% block additional_scripts %}
+   <script type="text/javascript" src="/static/js/mypage.js"></script>
+{% endblock %}
 

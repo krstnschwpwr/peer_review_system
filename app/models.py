@@ -59,4 +59,5 @@ class Paper(db.Model):
     def __repr__(self):
         return '<Paper:{}>'.format(self.title)
 
+
 db.create_all()

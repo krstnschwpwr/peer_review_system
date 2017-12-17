@@ -19,7 +19,7 @@
  <form class="form-signin" role="form" method="post" action="">
        {{ form.csrf_token }}
 
-       {{ form.title(placeholder="email") }}
+       {{ form.title(placeholder="Title") }}
     <span class="error">
       {% if form.title.errors %}
         {% for error in form.title.errors %}
@@ -29,7 +29,7 @@
     </span>
   </p>
   <p>
-  {{ form.abstract(placeholder="password") }}
+  {{ form.abstract(placeholder="What's the paper about?") }}
     <span class="error">
       {% if form.abstract.errors %}
         {% for error in form.abstract.errors %}

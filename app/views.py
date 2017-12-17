@@ -116,6 +116,8 @@ def update_page():
     return redirect('/page/'+paper_id)
 #API
 
+
+
 @app.route('/api/users', methods=['GET'])
 #@auth.login_required
 def get_users():
