@@ -111,7 +111,7 @@ def save_page():
             title = paper_form.title.data
             abstract = paper_form.abstract.data
             status = paper_form.status.data
-            paper = Paper(title, abstract, reviewer_id=1, status="Rejected")
+            paper = Paper(title, abstract, reviewer_id=1, status="Under Review")
             db.session.add(paper)
             db.session.commit()
             flash('Paper successfully added')
@@ -130,27 +130,29 @@ def make_public_paper(paper):
 	return new_paper
 
 
-@app.route('/paper/<int:paper_id>/delete', methods=['POST', 'GET'])
-#@auth.login_required
-def delete_paper(paper_id):
-    qry = db.session.query(Paper).filter(Paper.id == id)
-    paper = qry.first()
-
-    if paper:
-        form = PaperForm(formdata=request.form, obj=paper)
-        if request.method == 'POST' and form.validate():
-            # delete the item from the database
-            db.session.delete(paper)
-            db.session.commit()
-            flash('Paper deleted successfully!')
-            return redirect('/mypage')
-        return render_template('delete.html', form=form)
-    else:
-        return 'Error deleting #{id}'.format(id=id)
-
-  #  db.session.query(Paper).filter_by(id=paper_id).delete()
-    db.session.commit()
-    return redirect('/mypage')
+# @app.route('/paper/<int:paper_id>/delete', methods=['DELETE'])
+# #@auth.login_required
+# def delete_paper(paper_id):
+#     qry = db.session.query(Paper).filter(
+#         Paper.id == id)
+#     paper = qry.first()
+#
+#     if paper:
+#         form = PaperForm(formdata=request.form, obj=paper)
+#         if request.method == 'POST' and form.validate():
+#             # delete the item from the database
+#             db.session.delete(z)
+#             db_session.commit()
+#
+#             flash('Album deleted successfully!')
+#             return redirect('/')
+#         return render_template('delete_album.html', form=form)
+#     else:
+#         return 'Error deleting #{id}'.format(id=id)
+#
+#     db.session.query(Paper).filter_by(id=paper_id).delete()
+#     db.session.commit()
+#     return redirect('/mypage')
 
 
 @app.route('/paper/<int:paper_id>/update', methods=['POST'])
@@ -172,9 +174,9 @@ def get_papers():
   papers = Paper.query.all()
   return jsonify(papers=papers_schema.dump(papers).data)
 
-@app.route('/api/paper/<int:id>', methods=['GET'])
-def get_paper(id):
-    paper = Paper.query.get(id)
+@app.route('/api/paper/<int:paper_id>', methods=['GET'])
+def get_paper(paper_id):
+    paper = Paper.query.get(paper_id)
     if not paper:
         abort(404)
     return jsonify(paper_schema.dump(paper).data)
