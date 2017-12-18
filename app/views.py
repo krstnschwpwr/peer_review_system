@@ -1,4 +1,4 @@
-from app import app, db, lm
+from app import app, db, auth
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
 from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm, PaperForm
@@ -187,6 +187,16 @@ def get_paper(paper_id):
     if not paper:
         abort(404)
     return jsonify(paper_schema.dump(paper).data)
+
+
+@app.route('/api/paper/delete/<int:paper_id>', methods=['GET', 'POST'])
+def delete_paper(paper_id):
+    paper = Paper.query.get(paper_id)
+    if not paper:
+        abort(404)
+    db.session.delete(paper)
+    db.session.commit()
+    return redirect('mypage')
 
 
 
