@@ -35,9 +35,6 @@ class User(db.Model):
     def get_id(self):
         return str(self.id)
 
-    @lm.user_loader
-    def load_user(user_id):
-        return User.query.filter(User.id == int(user_id)).first()
 
     def __repr__(self):
         return 'Users {}>'.format(self.id)

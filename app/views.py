@@ -1,10 +1,9 @@
-from app import app, db, auth
+from app import app, db, lm
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
 from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm, PaperForm
 from app.models import User, bcrypt, Paper
 from app.schema import users_schema, user_schema, paper_schema, papers_schema
-
 
 
 
@@ -51,6 +50,7 @@ def login():
             if user is not None and bcrypt.check_password_hash(
                     user.password, request.form['password']
             ):
+                user.authenticated = True
                 login_user(user)
                 flash('Hi' + 'You just signed up')
                 session['logged_in'] = True
@@ -62,7 +62,10 @@ def login():
 
 
 @app.route("/logout")
+@login_required
 def logout():
+    user = current_user
+    user.authenticated = False
     logout_user()
     session['logged_in'] = False
     return home()
@@ -75,7 +78,7 @@ def logout():
 
 
 @app.route('/mypage')
-#auth.login_required
+@login_required
 def index():
     if 'username' in session:
         username = session['username']
@@ -85,12 +88,13 @@ def index():
 
 
 @app.route('/api/users', methods=['GET'])
-#@auth.login_required
+@login_required
 def get_users():
   users = User.query.all()
   return jsonify(users=users_schema.dump(users).data)
 
 @app.route('/api/user/<int:id>', methods=['GET'])
+@login_required
 def get_user(id):
     user = User.query.get(id)
     if not user:
@@ -102,6 +106,7 @@ def get_user(id):
 ##Papers
 
 @app.route('/paper/new', methods=['GET', 'POST'])
+@login_required
 def save_page():
     paper_form = PaperForm()
 
@@ -156,7 +161,7 @@ def make_public_paper(paper):
 
 
 @app.route('/paper/<int:paper_id>/update', methods=['POST'])
-#@auth.login_required
+@login_required
 def update_page(paper_id):
     paper_id = request.form['id']
     title = request.form['title']
@@ -170,11 +175,13 @@ def update_page(paper_id):
 
 
 @app.route('/api/papers', methods=['GET'])
+@login_required
 def get_papers():
   papers = Paper.query.all()
   return jsonify(papers=papers_schema.dump(papers).data)
 
 @app.route('/api/paper/<int:paper_id>', methods=['GET'])
+@login_required
 def get_paper(paper_id):
     paper = Paper.query.get(paper_id)
     if not paper:
