@@ -6,7 +6,7 @@ $(document).ready(function () {
 
     function useReturnData(data) {
         myvar = data.papers;
-        var url = ''
+        var url = '';
         var id = '';
         $.each(myvar, function (key, paper) {
             id = paper.id;
@@ -16,7 +16,7 @@ $(document).ready(function () {
                 "<a href='api/paper/delete/"+id+"'> <button class='btn orange'>Delete</button></a>"+
                 "</a> "  + "</form><br>" +"</a>" + "</div></li>");
         });
-    };
+    }
 
     function loadPapers() {
         $.ajax({
