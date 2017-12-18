@@ -1,4 +1,4 @@
-from app import app, db, auth
+from app import app, db
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
 from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm, PaperForm
