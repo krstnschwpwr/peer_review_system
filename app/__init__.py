@@ -41,7 +41,5 @@ from app.models import User
 import app.db_create
 
 
-#lm.login_view = "users.login"
-
 
 
