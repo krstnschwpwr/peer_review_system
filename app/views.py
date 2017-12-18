@@ -50,10 +50,13 @@ def login():
             if user is not None and bcrypt.check_password_hash(
                     user.password, request.form['password']
             ):
-                user.authenticated = True
-                login_user(user)
-                flash('Hi' + 'You just signed up')
-                session['logged_in'] = True
+                if user.email == 'admin@admin.com':
+                    return redirect('/admin')
+                else:
+                    user.authenticated = True
+                    login_user(user)
+                    flash('Hi' + 'You just signed up')
+                    session['logged_in'] = True
                 return redirect('/mypage')
 
             else:

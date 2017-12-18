@@ -2,7 +2,7 @@ from flask import Flask, g
 from flask.ext.bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
-from flask_restful import Api, Resource
+#from flask_restful import Api, Resource
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_marshmallow import Marshmallow
 from flask_httpauth import HTTPBasicAuth
@@ -11,7 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-api = Api(app)
+#api = Api(app)
 
 
 
