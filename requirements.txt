@@ -3,10 +3,12 @@
 # platform: osx-64
 _license=1.1=py34_1
 alabaster=0.7.9=py34_0
+alembic=0.9.6=py_0
 anaconda=4.3.1=np111py34_0
 anaconda-client=1.6.0=py34_0
 anaconda-navigator=1.5.0=py34_0
 anaconda-project=0.4.1=py34_0
+aniso8601=1.1.0=py34_0
 appnope=0.1.0=py34_0
 appscript=1.0.1=py34_0
 argcomplete=1.0.0=py34_1
@@ -15,6 +17,7 @@ astropy=1.3=np111py34_0
 babel=2.3.4=py34_0
 backports=1.0=py34_0
 backports_abc=0.5=py34_0
+bcrypt=3.1.2=py34_0
 beautifulsoup4=4.5.3=py34_0
 bitarray=0.8.1=py34_0
 blaze=0.10.1=py34_0
@@ -38,13 +41,23 @@ cytoolz=0.8.2=py34_0
 dask=0.13.0=py34_0
 datashape=0.5.4=py34_0
 decorator=4.0.11=py34_0
+defusedxml=0.4.1=py34_0
 dill=0.2.5=py34_0
 docutils=0.13.1=py34_0
 entrypoints=0.2.2=py34_0
 et_xmlfile=1.0.1=py34_0
 fastcache=1.0.2=py34_1
 flask=0.12=py34_0
+flask-bcrypt=0.7.1=py34_0
 flask-cors=3.0.2=py34_0
+flask-httpauth=3.2.1=py34_0
+flask-login=0.3.2=py34_0
+flask-marshmallow=0.7.0=py34_0
+flask-migrate=1.5.1=py34_0
+flask-openid=1.2.5=py34_0
+flask-restful=0.3.5=py34_0
+flask-restless=1.0.0b1=py34_0
+flask-script=2.0.6=py_0
 flask-sqlalchemy=2.0=py34_0
 flask-wtf=0.12=py34_0
 freetype=2.5.5=2
@@ -82,8 +95,12 @@ libxslt=1.1.29=0
 llvmlite=0.15.0=py34_0
 locket=0.2.0=py34_1
 lxml=3.7.2=py34_0
+mako=1.0.4=py34_0
 markupsafe=0.23=py34_2
+marshmallow=2.10.4=py34_1
+marshmallow-sqlalchemy=0.12.0=py34_0
 matplotlib=2.0.0=np111py34_0
+mimerender=0.6.0=py34_0
 mistune=0.7.3=py34_1
 mkl=2017.0.1=0
 mkl-service=1.1.2=py34_3
@@ -108,6 +125,7 @@ path.py=10.0=py34_0
 pathlib2=2.2.0=py34_0
 patsy=0.4.1=py34_0
 pep8=1.7.0=py34_0
+permission=0.4.1=py34_0
 pexpect=4.2.1=py34_0
 pickleshare=0.7.4=py34_0
 pillow=4.0.0=py34_0
@@ -132,7 +150,10 @@ pytables=3.3.0=np111py34_0
 pytest=3.0.5=py34_0
 python=3.4.5=0
 python-dateutil=2.6.0=py34_0
+python-editor=1.0.1=py34_0
+python-mimeparse=1.5.2=py34_0
 python.app=1.2=py34_4
+python3-openid=3.0.10=py34_0
 pytz=2016.10=py34_0
 pyyaml=3.12=py34_0
 pyzmq=16.0.2=py34_0
