@@ -6,6 +6,7 @@ class UserSchema(ma.ModelSchema):
     class Meta:
         model = User
 
+
 class PaperSchema(ma.ModelSchema):
     class Meta:
         model = Paper
