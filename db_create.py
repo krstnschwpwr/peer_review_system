@@ -1,7 +1,8 @@
-from app import db, User
 
+from app import db
 
-db.create_all()
+from app.models import User
+
 
 user = User(name="admin", email="admin@admin.com", password="admin")
 db.session.add(user)

@@ -35,10 +35,11 @@ def load_user(user_id):
 
 lm.login_view="home"
 
+db.create_all()
 app.config.from_object(__name__)
 from app import views
 from app.models import User
-import app.db_create
+
 
 
 
