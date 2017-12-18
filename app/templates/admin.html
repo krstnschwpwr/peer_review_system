@@ -1,0 +1,37 @@
+{% extends "layout/base.html" %}
+
+{% block title %} <h1 class="intro_title">Papers to Review</h1> {% endblock %}
+
+{% block content %}
+    <section class="section-components">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% for p in paper %}
+            <div class="btn"><p>{{ p.id }} - {{ p.reviewer_id }} </p>
+
+                <h3> {{ p.title }}</h3>
+                <p>{{ p.abstract }}</p>
+
+                <select>
+                    {% for u in users %}
+                        <option>
+                            {{ u.email }}
+                        </option>
+
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+
+
+    </section>
+{% endblock %}

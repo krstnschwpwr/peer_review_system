@@ -1,6 +1,8 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, TextAreaField, SelectField
 from wtforms.validators import InputRequired, DataRequired
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from app.models import User
 
 review_status = [('0', 'Under Review'), ('1', 'Accepted'),('2', 'Rejected')]
 
@@ -19,3 +21,7 @@ class PaperForm(Form):
     title = StringField('title', validators=[InputRequired()])
     abstract = TextAreaField('abstract', validators=[InputRequired()])
     status = SelectField('Status', choices=review_status)
+
+
+class UserForm(Form):
+    all_users = SelectField('User', choices=[])

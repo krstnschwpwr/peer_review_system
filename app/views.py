@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
 from flask_login import login_user, login_required, logout_user, current_user, session
-from app.forms import RegisterForm, LoginForm, PaperForm
+from app.forms import RegisterForm, LoginForm, PaperForm, UserForm
 from app.models import User, bcrypt, Paper
 from app.schema import users_schema, user_schema, paper_schema, papers_schema
 
@@ -50,18 +50,29 @@ def login():
             if user is not None and bcrypt.check_password_hash(
                     user.password, request.form['password']
             ):
+                user.authenticated = True
+                login_user(user)
+                flash('Hi' + 'You just signed up')
+                session['logged_in'] = True
                 if user.email == 'admin@admin.com':
                     return redirect('/admin')
                 else:
-                    user.authenticated = True
-                    login_user(user)
-                    flash('Hi' + 'You just signed up')
-                    session['logged_in'] = True
-                return redirect('/mypage')
+                    return redirect('/mypage')
 
             else:
                 error = 'Invalid username or password.'
     return render_template('login.html', form=form, error=error)
+
+
+@app.route("/admin")
+@login_required
+def admin():
+    paper = Paper.query.all()
+
+    form = UserForm()
+    users = User.query.all()
+   # form.all_users.choices = users.i
+    return render_template('admin.html', paper=paper, users=users)
 
 
 @app.route("/logout")
