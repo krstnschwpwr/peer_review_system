@@ -13,7 +13,7 @@ def home():
 
     return render_template('home.html')
 
-@app.route('/api/user/add', methods=['POST', 'GET'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     user_form = RegisterForm()
 
