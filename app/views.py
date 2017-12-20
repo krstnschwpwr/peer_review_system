@@ -150,6 +150,14 @@ def save_review():
     return render_template('admin.html', form=form, users=users)
 
 
+@app.route('/submissions', methods=['GET', 'POST'])
+def show_submissions():
+    papers = []
+    all_reviews = Reviewer.query.filter(Reviewer.rating != None).all()
+    for a in all_reviews:
+        papers.append(Paper.query.filter_by(id=a.paper_id).first())
+    return render_template('submission.html', fetch=papers)
+
 
 ##Papers
 

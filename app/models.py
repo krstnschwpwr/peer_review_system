@@ -67,9 +67,10 @@ class Reviewer(db.Model):
     reviewer_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=True)
 
-    def __init__(self, paper_id, reviewer_id):
+    def __init__(self, paper_id, reviewer_id, rating):
         self.paper_id = paper_id
         self.reviewer_id = reviewer_id
+        self.rating = None
 
     def __repr__(self):
         return '<Reviewer:{}>'.format(self.id)
