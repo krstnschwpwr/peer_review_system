@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, TextAreaField, SelectField,IntegerField
 from wtforms.validators import InputRequired, DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from app.models import User
@@ -25,3 +25,8 @@ class PaperForm(Form):
 
 class UserForm(Form):
     all_users = SelectField('User', choices=[])
+
+
+class ReviewerForm(Form):
+    paper_id = IntegerField('Id', validators=[InputRequired])
+    reviewer_id = IntegerField('Reviewer Id', validators=[InputRequired])

@@ -1,7 +1,7 @@
 from app import app, db
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
 from flask_login import login_user, login_required, logout_user, current_user, session
-from app.forms import RegisterForm, LoginForm, PaperForm, UserForm
+from app.forms import RegisterForm, LoginForm, PaperForm, ReviewerForm
 from app.models import User, bcrypt, Paper
 from app.schema import users_schema, user_schema, paper_schema, papers_schema
 
@@ -69,10 +69,10 @@ def login():
 def admin():
     paper = Paper.query.all()
 
-    form = UserForm()
+    form = ReviewerForm()
     users = User.query.all()
    # form.all_users.choices = users.i
-    return render_template('admin.html', paper=paper, users=users)
+    return render_template('admin.html', paper=paper, users=users, form=form)
 
 
 @app.route("/logout")
@@ -214,6 +214,7 @@ def delete_paper(paper_id):
 
 
 
+
 # @app.route('/api/user/<int:id>/paper/<int:id>', methods=['GET'])
 # def get_users_paper(id):
 #     user = User.query.get(id)
@@ -221,9 +222,9 @@ def delete_paper(paper_id):
 #         abort(404)
 #     return jsonify(user_schema.dump(user).data)
 
-@app.errorhandler(404)
-def not_found(error):
-	return make_response(jsonify({ 'error' : 'Not Found' }), 404)
+# @app.errorhandler(404)
+# def not_found(error):
+# 	return make_response(jsonify({ 'error' : 'Not Found' }), 404)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port="8080")

@@ -47,7 +47,7 @@ class Paper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     abstract = db.Column(db.String, nullable=False)
-    reviewer_id =db.Column(db.Integer, ForeignKey('users.id'))
+    reviewer_id = db.Column(db.Integer, ForeignKey('users.id'))
     status = db.Column(db.String(255), nullable=False)
 
     def __init__(self, title, abstract, reviewer_id, status):
@@ -60,3 +60,19 @@ class Paper(db.Model):
     def __repr__(self):
         return '<Paper:{}>'.format(self.title)
 
+
+class Reviewer(db.Model):
+
+    __tablename__ = "reviewers"
+    id = db.Column(db.Integer, primary_key=True)
+    paper_id = db.Column(db.Integer, nullable=False)
+    reviewer_id = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
+
+    def __init__(self, paper_id, reviewer_id, rating):
+        self.paper_id = paper_id
+        self.reviewer_id = reviewer_id
+        self.rating = rating
+
+    def __repr__(self):
+        return '<Reviewer:{}>'.format(self.id)

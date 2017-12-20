@@ -3,35 +3,52 @@
 {% block title %} <h1 class="intro_title">Papers to Review</h1> {% endblock %}
 
 {% block content %}
-    <section class="section-components">
-        {% with messages = get_flashed_messages() %}
+<div class="container">
+    <div class="columns">
+        <div class="column is-8">
+            {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div class="alert alert-danger">
-                    <ul>
-                        {% for message in messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
+            <div class="alert alert-danger">
+                <ul>
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
             {% endif %}
-        {% endwith %}
-        {% for p in paper %}
-            <div><p>{{ p.id }} - {{ p.reviewer_id }} </p>
+            {% endwith %}
+            {% for p in paper %}
+            <p>{{ p.id }} - {{ p.reviewer_id }} </p>
+                <h1 class="title is-4">Title</h1>
+                <h1 class="subtitle is-5"> {{ p.title }}</h1>
+                    <h1 class="title is-4">Abstract</h1>
+               <h1 class="subtitle is-5"> {{ p.abstract }}</h1>
+                 </div>
 
-                <h3> {{ p.title }}</h3>
-                <p>{{ p.abstract }}</p>
 
+
+               <div class="column">
+   <h3 class="subtitle">Select Reviewers</h3>
                 <select>
+                    <h1>Reviewer</h1>
                     {% for u in users %}
-                        <option>
-                            {{ u.email }}
-                        </option>
+                    <option>
+                         {{ form.u.id }}
+                    </option>
 
                     {% endfor %}
                 </select>
-            </div>
-        {% endfor %}
+                    <div class="column">
+              <a class="button is-danger">Add a reviewer</a>
+              </div>
+                   </div>
 
 
-    </section>
+
+
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
 {% endblock %}
