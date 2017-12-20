@@ -11,10 +11,15 @@
 .list { margin-top: 5em; margin-bottom: 5em; min-height: 13em; clear: both;}
 
 
-.mypapers{ width: 100%; float: left;}
+.mypapers{ width: 100%; float: left; margin-bottom: 5em;}
 .option a{ float: left; margin-right: 10px;}
 .cf { clear: both;}
 span.status{ background: #cecbcb; color: white; padding: .3em .7em; margin-top: 2em;font-size: .7em;
     margin-left: 1em;}
 ul{ list-style: none; padding-left: 0;}
 .content{ margin-bottom: 5em;}
+select{ width: 25%;}
+.media-content .button{ margin-top: .5em;}
+.hero.is-primary.is-bold{ min-height: 20em;}
+article .button{ margin-right: 1em;}
+.hero.is-primary .title{ text-transform: uppercase; letter-spacing: 1px; font-size: 3.9em; margin: 2em auto;}
