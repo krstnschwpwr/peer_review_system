@@ -1,10 +1,13 @@
 from flask_wtf import Form
-from wtforms import StringField, PasswordField, TextAreaField, SelectField,IntegerField
+from wtforms import StringField, PasswordField, TextAreaField, SelectField,IntegerField, HiddenField
 from wtforms.validators import InputRequired, DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from app.models import User
 
 review_status = [('0', 'Under Review'), ('1', 'Accepted'),('2', 'Rejected')]
+review_ids = User.query.all()
+
+
 
 class RegisterForm(Form):
     name = StringField('Name', validators=[InputRequired()])
@@ -29,4 +32,5 @@ class UserForm(Form):
 
 class ReviewerForm(Form):
     paper_id = IntegerField('Id', validators=[InputRequired])
-    reviewer_id = IntegerField('Reviewer Id', validators=[InputRequired])
+    reviewer_id = SelectField('Reviewer Id', choices=review_ids)
+

@@ -2,8 +2,8 @@ from app import app, db
 from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
 from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm, PaperForm, ReviewerForm
-from app.models import User, bcrypt, Paper
-from app.schema import users_schema, user_schema, paper_schema, papers_schema
+from app.models import User, bcrypt, Paper, Reviewer
+from app.schema import users_schema, user_schema, paper_schema, papers_schema, reviewers_schema
 
 
 
@@ -52,7 +52,6 @@ def login():
             ):
                 user.authenticated = True
                 login_user(user)
-                flash('Hi' + 'You just signed up')
                 session['logged_in'] = True
                 if user.email == 'admin@admin.com':
                     return redirect('/admin')
@@ -65,14 +64,17 @@ def login():
 
 
 @app.route("/admin")
-@login_required
+#@login_required
 def admin():
     paper = Paper.query.all()
 
     form = ReviewerForm()
     users = User.query.all()
+    user_id = request.form.get('dropdown')
+
+
    # form.all_users.choices = users.i
-    return render_template('admin.html', paper=paper, users=users, form=form)
+    return render_template('admin.html', user_id=user_id, form=form, paper=paper, users=users)
 
 
 @app.route("/logout")
@@ -116,7 +118,22 @@ def get_user(id):
     return jsonify(user_schema.dump(user).data)
 
 
+@app.route('/review/new', methods=['GET', 'POST'])
+@login_required
+def save_review():
+    paper = Paper.query.all()
 
+    form = ReviewerForm()
+    users = User.query.all()
+
+    if request.method == 'POST':
+        paper_id = request.form.get('paper_id')
+        review = Reviewer(paper_id=paper_id, reviewer_id=request.form.get('dropdown'), rating=1)
+        db.session.add(review)
+        db.session.commit()
+    #return (str(user_id))  #
+
+    return render_template('admin.html', form=form, users = users)
 ##Papers
 
 @app.route('/paper/new', methods=['GET', 'POST'])
@@ -193,6 +210,15 @@ def update_page(paper_id):
 def get_papers():
   papers = Paper.query.all()
   return jsonify(papers=papers_schema.dump(papers).data)
+
+# @app.route('/api/reviews', methods=['GET', 'POST'])
+# def save_review():
+
+@app.route('/api/reviews', methods=['GET'])
+def get_reviews():
+  reviewers = Reviewer.query.all()
+  return jsonify(reviewers=reviewers_schema.dump(reviewers).data)
+
 
 @app.route('/api/paper/<int:paper_id>', methods=['GET'])
 @login_required

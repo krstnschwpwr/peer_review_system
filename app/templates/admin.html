@@ -19,36 +19,38 @@
             {% endwith %}
             {% for p in paper %}
             <p>{{ p.id }} - {{ p.reviewer_id }} </p>
-                <h1 class="title is-4">Title</h1>
-                <h1 class="subtitle is-5"> {{ p.title }}</h1>
-                    <h1 class="title is-4">Abstract</h1>
-               <h1 class="subtitle is-5"> {{ p.abstract }}</h1>
-                 </div>
+            <h1 class="title is-4">Title</h1>
+            <h1 class="subtitle is-5"> {{ p.title }}</h1>
+            <h1 class="title is-4">Abstract</h1>
+            <h1 class="subtitle is-5"> {{ p.abstract }}</h1>
+        </div>
 
 
-
-               <div class="column">
-   <h3 class="subtitle">Select Reviewers</h3>
-                <select>
+        <div class="column">
+            <h3 class="subtitle">Select Reviewers</h3>
+            <form class="" role="form" method="post" action="{{ url_for('save_review') }}">
+                <select name="dropdown">
                     <h1>Reviewer</h1>
                     {% for u in users %}
-                    <option>
-                         {{ form.u.id }}
+                    <option value="{{ u.id }}">
+                        {{ u.name }}
                     </option>
 
                     {% endfor %}
+
+                <input type="hidden" value="{{p.id}}" name="paper_id">
                 </select>
-                    <div class="column">
-              <a class="button is-danger">Add a reviewer</a>
-              </div>
-                   </div>
+
+                <div class="column">
+                    <button class="button is-danger" type="submit">Add a reviewer</button>
+                </div>
 
 
-
+            </form>
 
             {% endfor %}
         </div>
     </div>
-
 </div>
+
 {% endblock %}
