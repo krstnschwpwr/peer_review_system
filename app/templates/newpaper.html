@@ -1,50 +1,55 @@
 {% extends "layout/base.html" %}
 
 {% block title %}
-{% if current_user.is_authenticated %}
-<a href="/logout">
-    <button class="btn btn-link orange btn-success">Logout</button>
-</a>
+    {% if current_user.is_authenticated %}
+        <div class="columns">
+            <div class="column">
+                <a class="button is-link" href="/mypage">Mypage</a>
+            </div>
+            <div class="column">
+                <a class="button is-link">Create New Paper</a>
+            </div>
+            <div class="column">
+                <a class="button is-link" href="/logout">Logout</a>
+            </div>
 
-
-<h1 class="intro_title">Hi {{ current_user.name }} !</h1>
-{% endif %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-<section class="section-components">
+    <section class="section-components">
 
-    <br/>
-    <br/>
- <form class="form-signin" role="form" method="post" action="">
-       {{ form.csrf_token }}
+        <br/>
+        <br/>
+        <form class="form-signin" role="form" method="post" action="">
+            {{ form.csrf_token }}
 
-       {{ form.title(placeholder="Title") }}
-    <span class="error">
+            {{ form.title(placeholder="Title") }}
+            <span class="error">
       {% if form.title.errors %}
-        {% for error in form.title.errors %}
-          {{ error }}
-        {% endfor %}
+          {% for error in form.title.errors %}
+              {{ error }}
+          {% endfor %}
       {% endif %}
     </span>
-  </p>
-  <p>
-  {{ form.abstract(placeholder="What's the paper about?") }}
-    <span class="error">
+            </p>
+            <p>
+                {{ form.abstract(placeholder="What's the paper about?") }}
+                <span class="error">
       {% if form.abstract.errors %}
-        {% for error in form.abstract.errors %}
-          {{ error }}
-        {% endfor %}
+          {% for error in form.abstract.errors %}
+              {{ error }}
+          {% endfor %}
       {% endif %}
     </span>
-      {{ form.status }}
-  </p>
-  <button class="btn btn-sm btn-success" type="submit">Add New Paper</button>
-</form>
+                {{ form.status }}
+            </p>
+            <button class="btn btn-sm btn-success" type="submit">Add New Paper</button>
+        </form>
 
 
-
-</section>
+    </section>
 {% endblock %}
 
 
