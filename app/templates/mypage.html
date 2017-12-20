@@ -2,45 +2,80 @@
 
 {% block title %}
 
-    {% if current_user.is_authenticated %}
-        <div class="columns">
-            <div class="column">
-                <a class="button is-link">Mypage</a>
-            </div>
-            <div class="column">
-                <a class="button is-link" href="/paper/new">Create New Paper</a>
-            </div>
-            <div class="column">
-                <a class="button is-link" href="/logout">Logout</a>
-            </div>
+{% if current_user.is_authenticated %}
+<div class="columns">
+    <div class="column">
+        <a class="button is-link">Mypage</a>
+    </div>
+    <div class="column">
+        <a class="button is-link" href="/paper/new">Create New Paper</a>
+    </div>
+    <div class="column">
+        <a class="button is-link" href="/logout">Logout</a>
+    </div>
 
-        </div>
-    {% endif %}
+</div>
+{% endif %}
 {% endblock %}
 
 {% block content %}
-    Hi {{ current_user.name }} !
+Hi {{ current_user.name }} !
 
-    <section class="section-components mypage">
+<section class="section-components mypage">
 
-        <div class="mypapers">
-            <h3> My Papers</h3>
-            <ul class="list"></ul>
+    <div class="mypapers">
+        <h3> My Papers</h3>
+        <ul class="list"></ul>
 
+    </div>
+
+
+    <div class="review">
+        <h2 class="title is-8"> Papers to review</h2>
+        <div class="columns">
+            <div class="column">
+
+
+                {% for my in mypapers%}
+                <span class="status">{{my.status}}</span>
+                <h2 class="title is-4">Title</h2>
+                <h4 class="subtitle is-5"> {{ my.title }}</h4>
+                <h2 class="title is-4">Abstract</h2>
+                <h4 class="subtitle is-5"> {{ my.abstract }}</h4>
+
+
+            </div>
+            <div class="column">
+                <form class="" role="form" method="post" action="{{ url_for('save_rating') }}">
+                    <select name="rating">
+                        <h1>My Rating</h1>
+                        <option value="-2">-2 </option>
+                        <option value="-1">-1</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                    <input type="hidden" value="{{my.id}}" name="paper_id">
+
+                    <div class="column">
+                        <button class="button is-danger" type="submit">Submit</button>
+                    </div>
+
+
+                </form>
+
+
+            </div>
+               {% endfor %}
         </div>
+    </div>
 
 
-        <div class="review">
-            <h3> Papers to review</h3>
-            <div class="list"></div>
-        </div>
-
-
-    </section>
+</section>
 {% endblock %}
 
 
 {% block additional_scripts %}
-    <script type="text/javascript" src="/static/js/mypage.js"></script>
+<script type="text/javascript" src="/static/js/mypage.js"></script>
 {% endblock %}
 

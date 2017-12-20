@@ -6,12 +6,12 @@ from app.models import User, bcrypt, Paper, Reviewer
 from app.schema import users_schema, user_schema, paper_schema, papers_schema, reviewers_schema
 
 
-
 @app.route('/')
 def home():
     """Render website's home page."""
 
     return render_template('home.html')
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -36,11 +36,10 @@ def register():
     return render_template('register.html', form=user_form)
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    #if current_user.is_authenticated():
-     #   return redirect(url_for('home'))
+    # if current_user.is_authenticated():
+    #   return redirect(url_for('home'))
     form = LoginForm(request.form)
     error = None
     if request.method == 'POST':
@@ -64,7 +63,7 @@ def login():
 
 
 @app.route("/admin")
-#@login_required
+# @login_required
 def admin():
     paper = Paper.query.all()
 
@@ -72,8 +71,7 @@ def admin():
     users = User.query.all()
     user_id = request.form.get('dropdown')
 
-
-   # form.all_users.choices = users.i
+    # form.all_users.choices = users.i
     return render_template('admin.html', user_id=user_id, form=form, paper=paper, users=users)
 
 
@@ -85,6 +83,8 @@ def logout():
     logout_user()
     session['logged_in'] = False
     return home()
+
+
 #
 # #CRUD
 # @app.route('/paper/new')
@@ -98,16 +98,18 @@ def logout():
 def index():
     if 'username' in session:
         username = session['username']
-        return 'Logged in as ' + username + '<br>' + \
-               "<b><a href = '/logout'>click here to log out</a></b>"
-    return render_template('mypage.html')
+
+    myreviews = Reviewer.query.filter(Reviewer.reviewer_id == current_user.id).first()
+    mypapers = Paper.query.filter(Paper.id == myreviews.paper_id).all()
+    return render_template('mypage.html', mypapers=mypapers)
 
 
 @app.route('/api/users', methods=['GET'])
 @login_required
 def get_users():
-  users = User.query.all()
-  return jsonify(users=users_schema.dump(users).data)
+    users = User.query.all()
+    return jsonify(users=users_schema.dump(users).data)
+
 
 @app.route('/api/user/<int:id>', methods=['GET'])
 @login_required
@@ -116,6 +118,18 @@ def get_user(id):
     if not user:
         abort(404)
     return jsonify(user_schema.dump(user).data)
+
+
+@app.route('/mypage/rating/save', methods=['GET', 'POST'])
+def save_rating():
+    if request.method == 'POST':
+        rating = request.form.get('rating')
+        paper_id = request.form.get('paper_id')
+        bl = Reviewer.query.filter_by(reviewer_id=current_user.id, paper_id = paper_id).first()
+        rat = bl.rating
+        bl.rating = rating
+        db.session.commit()
+    return render_template('admin.html')
 
 
 @app.route('/review/new', methods=['GET', 'POST'])
@@ -128,12 +142,15 @@ def save_review():
 
     if request.method == 'POST':
         paper_id = request.form.get('paper_id')
-        review = Reviewer(paper_id=paper_id, reviewer_id=request.form.get('dropdown'), rating=1)
+        review = Reviewer(paper_id=paper_id, reviewer_id=request.form.get('dropdown'))
         db.session.add(review)
         db.session.commit()
-    #return (str(user_id))  #
+    # return (str(user_id))  #
 
-    return render_template('admin.html', form=form, users = users)
+    return render_template('admin.html', form=form, users=users)
+
+
+
 ##Papers
 
 @app.route('/paper/new', methods=['GET', 'POST'])
@@ -157,38 +174,13 @@ def save_page():
 
 
 def make_public_paper(paper):
-	new_paper = {}
-	for field in paper:
-		if field == 'id':
-			new_paper['uri'] = url_for('get_papers', paper_id = paper['id'], _external = True)
-		else:
-			new_paper[field] = paper[field]
-	return new_paper
-
-
-# @app.route('/paper/<int:paper_id>/delete', methods=['DELETE'])
-# #@auth.login_required
-# def delete_paper(paper_id):
-#     qry = db.session.query(Paper).filter(
-#         Paper.id == id)
-#     paper = qry.first()
-#
-#     if paper:
-#         form = PaperForm(formdata=request.form, obj=paper)
-#         if request.method == 'POST' and form.validate():
-#             # delete the item from the database
-#             db.session.delete(z)
-#             db_session.commit()
-#
-#             flash('Album deleted successfully!')
-#             return redirect('/')
-#         return render_template('delete_album.html', form=form)
-#     else:
-#         return 'Error deleting #{id}'.format(id=id)
-#
-#     db.session.query(Paper).filter_by(id=paper_id).delete()
-#     db.session.commit()
-#     return redirect('/mypage')
+    new_paper = {}
+    for field in paper:
+        if field == 'id':
+            new_paper['uri'] = url_for('get_papers', paper_id=paper['id'], _external=True)
+        else:
+            new_paper[field] = paper[field]
+    return new_paper
 
 
 @app.route('/paper/<int:paper_id>/update', methods=['POST'])
@@ -199,25 +191,26 @@ def update_page(paper_id):
     abstract = request.form['abstract']
     status = request.form['status']
     db.session.query(Paper).filter_by(id=paper_id).update({'title': title,
-                                                          'abstract': abstract,
+                                                           'abstract': abstract,
                                                            'status': status})
     db.session.commit()
-    return redirect('/page/'+paper_id)
+    return redirect('/page/' + paper_id)
 
 
 @app.route('/api/papers', methods=['GET'])
 @login_required
 def get_papers():
-  papers = Paper.query.all()
-  return jsonify(papers=papers_schema.dump(papers).data)
+    papers = Paper.query.all()
+    return jsonify(papers=papers_schema.dump(papers).data)
+
 
 # @app.route('/api/reviews', methods=['GET', 'POST'])
 # def save_review():
 
 @app.route('/api/reviews', methods=['GET'])
 def get_reviews():
-  reviewers = Reviewer.query.all()
-  return jsonify(reviewers=reviewers_schema.dump(reviewers).data)
+    reviewers = Reviewer.query.all()
+    return jsonify(reviewers=reviewers_schema.dump(reviewers).data)
 
 
 @app.route('/api/paper/<int:paper_id>', methods=['GET'])
@@ -238,19 +231,6 @@ def delete_paper(paper_id):
     db.session.commit()
     return redirect('mypage')
 
-
-
-
-# @app.route('/api/user/<int:id>/paper/<int:id>', methods=['GET'])
-# def get_users_paper(id):
-#     user = User.query.get(id)
-#     if not user:
-#         abort(404)
-#     return jsonify(user_schema.dump(user).data)
-
-# @app.errorhandler(404)
-# def not_found(error):
-# 	return make_response(jsonify({ 'error' : 'Not Found' }), 404)
 
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0", port="8080")

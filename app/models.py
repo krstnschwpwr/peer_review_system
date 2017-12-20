@@ -16,7 +16,6 @@ class User(db.Model):
     name = db.Column(db.String(255))
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255), nullable=False)
-    papers = db.relationship("Paper", backref="reviewer", lazy="dynamic")
 
     def __init__(self, name, email, password):
         self.name = name
@@ -47,7 +46,6 @@ class Paper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     abstract = db.Column(db.String, nullable=False)
-    reviewer_id = db.Column(db.Integer, ForeignKey('users.id'))
     status = db.Column(db.String(255), nullable=False)
 
     def __init__(self, title, abstract, reviewer_id, status):
@@ -69,10 +67,9 @@ class Reviewer(db.Model):
     reviewer_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=True)
 
-    def __init__(self, paper_id, reviewer_id, rating):
+    def __init__(self, paper_id, reviewer_id):
         self.paper_id = paper_id
         self.reviewer_id = reviewer_id
-        self.rating = rating
 
     def __repr__(self):
         return '<Reviewer:{}>'.format(self.id)
