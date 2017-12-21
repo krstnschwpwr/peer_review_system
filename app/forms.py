@@ -33,5 +33,4 @@ class UserForm(Form):
 
 class ReviewerForm(Form):
     paper_id = IntegerField('Id', validators=[InputRequired])
-   # reviewer_id = SelectField('Reviewer Id', choices=review_ids)
 
