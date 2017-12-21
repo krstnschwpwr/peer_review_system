@@ -39,8 +39,6 @@ class User(db.Model):
 
 
 class Paper(db.Model):
-    REVIEW_STATUS = ((0, 'Under Review'), (1, 'Accepted'), (2, 'Rejected'))
-
     __tablename__ = "papers"
 
     id = db.Column(db.Integer, primary_key=True)

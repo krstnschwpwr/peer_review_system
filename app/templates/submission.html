@@ -11,13 +11,13 @@
             <h3 class="subtitle">Submitted Papers</h3>
             <form class="" role="form" method="post" action="{{ url_for('show_submissions') }}">
 
-                    {% for u in fetch %}
-                    <h1>Paper from </h1>
+                {% for u in fetch %}
+                <h1>Paper from </h1>
 
-                    {{u.title}}
-                    {{u.abstract}}
+                {{u.title}}
+                {{u.abstract}}
 
-                    {% endfor %}
+                {% endfor %}
 
 
                 <div class="column">

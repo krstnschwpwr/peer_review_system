@@ -29,33 +29,63 @@
 {% block content %}
 <section class="section-components">
 
-    <br/>
-    <br/>
-    <form class="form-signin" role="form" method="post" action="">
-        {{ form.csrf_token }}
+    <div class="columns">
+        <div class="column">
+            <div class="box">
+                <article class="media">
+                    <div class="media-content clearfix">
+                        <div class="content">
 
-        {{ form.title(placeholder="Title") }}
-        <span class="error">
-      {% if form.title.errors %}
-          {% for error in form.title.errors %}
-              {{ error }}
-          {% endfor %}
-      {% endif %}
-    </span>
-        </p>
-        <p>
-            {{ form.abstract(placeholder="What's the paper about?") }}
-            <span class="error">
-      {% if form.abstract.errors %}
-          {% for error in form.abstract.errors %}
-              {{ error }}
-          {% endfor %}
-      {% endif %}
-    </span>
-            {{ form.status }}
-        </p>
-        <button class="btn btn-sm btn-success" type="submit">Add New Paper</button>
-    </form>
+                            <form class="is-one-fifth" role="form" method="post" action="{{ url_for('save_page') }}">
+                                <h2 class="title is-8"> New Paper</h2>
+                                  {{ form.csrf_token }}
+                                <p>
+                                <h4 class="subtitle is-5"> {{ form.title(placeholder="Title") }}</h4>
+                                <select name="status">
+                                    <option value="Under Review">Under Review</option>
+                                    <option value="Accepted">Accepted</option>
+                                    <option value="Rejected">Rejected</option>
+
+                                </select>
+                                <span class="error">
+                              {% if form.title.errors %}
+                                  {% for error in form.title.errors %}
+                                      {{ error }}
+                                  {% endfor %}
+                              {% endif %}
+                                </span>
+                                <br>
+                                {{ form.abstract(placeholder="What's the paper about?") }}
+                                <span class="error">
+                          {% if form.abstract.errors %}
+                              {% for error in form.abstract.errors %}
+                                  {{ error }}
+                              {% endfor %}
+                          {% endif %}
+                             </span>
+
+                                </p>
+
+                                <div class="column is-narrow"></div>
+
+
+                                <input type="hidden" value="" name="paper_id">
+                                <button class="button is-danger" type="submit">Add New Paper</button>
+                            </form>
+                        </div>
+                        <div class="column"></div>
+                    </div>
+                </article>
+            </div>
+        </div>
+        <div class="column">
+        </div>
+
+    </div>
+
+
+    <br/>
+    <br/>
 
 
 </section>

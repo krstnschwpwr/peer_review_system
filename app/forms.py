@@ -4,8 +4,9 @@ from wtforms.validators import InputRequired, DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from app.models import User
 
-review_status = [('0', 'Under Review'), ('1', 'Accepted'),('2', 'Rejected')]
-review_ids = User.query.all()
+
+review_status = [('Under Review', 'Under Review'), ('Accepted', 'Accepted'),('Rejected', 'Rejected')]
+
 
 
 
@@ -31,6 +32,7 @@ class UserForm(Form):
 
 
 class ReviewerForm(Form):
+    review_ids = User.query.all()
     paper_id = IntegerField('Id', validators=[InputRequired])
     reviewer_id = SelectField('Reviewer Id', choices=review_ids)
 

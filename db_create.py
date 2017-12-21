@@ -24,7 +24,7 @@ paper = Paper(title="Organizing Your Social Sciences Research Paper: 3. The Abst
 db.session.add(paper)
 db.session.commit()
 
-paper = Paper(title="A Research on Cloud Computing Security",
+paper1 = Paper(title="A Research on Cloud Computing Security",
               abstract="This paper gives an overview on cloud computing security. To clarify cloud security, "
                        "a definition and scope of cloud computing security is presented. An ecosystem of cloud "
                        "security is shown to illustrate what each role in industry can do in turn. Then security "
@@ -33,10 +33,10 @@ paper = Paper(title="A Research on Cloud Computing Security",
                        "protection mechanism, IDM, data security, and virtualization security are discussed. Finally, "
                        "best practices on perspective of operator are summarized and a conclusion is conducted.",
               status="Under Review")
-db.session.add(paper)
+db.session.add(paper1)
 db.session.commit()
 
-paper = Paper(title="CyberCSP: Integrating cybersecurity into the computer science principles course",
+paper2 = Paper(title="CyberCSP: Integrating cybersecurity into the computer science principles course",
               abstract="The demand for cybersecurity professionals is projected to grow substantially, with the US "
                        "Bureau of Labor Statistics reporting that employment in cybersecurity within the US will grow "
                        "by 18% from 2014 to 2024, much faster than the average for all occupations. As creating a "
@@ -61,10 +61,10 @@ paper = Paper(title="CyberCSP: Integrating cybersecurity into the computer scien
                        "cybersecurity content was identified, and then integrated into the CSP course to create the "
                        "CyberCSP varia- t of the Computer Science Principles course.",
               status="Under Review")
-db.session.add(paper)
+db.session.add(paper2)
 db.session.commit()
 
-paper = Paper(title="« Prev Back to Results | Next A study of students' progress through introductory computer "
+paper3 = Paper(title="« Prev Back to Results | Next A study of students' progress through introductory computer "
                     "science programming courses",
               abstract="Given the growing demand for skilled workers from the Computer Science field, the high "
                        "attrition rate of entering Computer Science students is a serious problem at most "
@@ -81,10 +81,10 @@ paper = Paper(title="« Prev Back to Results | Next A study of students' progres
                        "students up until graduation. An analysis is also made to determine how courses tend to "
                        "predict the graduation success rate.",
               status="Under Review")
-db.session.add(paper)
+db.session.add(paper3)
 db.session.commit()
 
-paper = Paper(title="Analysis of the teaching-learning methodology adopted in the introduction to computer science "
+paper4 = Paper(title="Analysis of the teaching-learning methodology adopted in the introduction to computer science "
                     "classes",
               abstract="To meet socio-cultural demands imposed by the new millennium and its implications for "
                        "education, it was necessary for teachers and students to participate actively in the "
@@ -108,5 +108,5 @@ paper = Paper(title="Analysis of the teaching-learning methodology adopted in th
                        "number of students 37% reported dissatisfaction with assessment practices and the dynamics of "
                        "the classes.",
               status="Under Review")
-db.session.add(paper)
+db.session.add(paper4)
 db.session.commit()

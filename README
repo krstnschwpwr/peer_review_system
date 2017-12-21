@@ -1,4 +1,0 @@
-##set up database
-1. python manage.py db init
-2. python manage.py db migrate
-3. python db_create.py

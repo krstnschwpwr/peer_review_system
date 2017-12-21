@@ -18,7 +18,7 @@ span.status{ background: #cecbcb; color: white; padding: .3em .7em; margin-top: 
     margin-left: 1em;}
 ul{ list-style: none; padding-left: 0;}
 .content{ margin-bottom: 5em;}
-select{ width: 25%;}
+select{ width: 50%;}
 .media-content .button{ margin-top: .5em;}
 .hero.is-primary.is-bold{ min-height: 20em;}
 article .button{ margin-right: 1em;}
