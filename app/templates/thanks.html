@@ -1,0 +1,26 @@
+{% extends "layout/base.html" %}
+
+
+{% block title %}
+    Welcome! Do you want to register or login?
+{% endblock %}
+
+
+{% block content %}
+
+    <div class="container home has-text-centered">
+        <div class="columns">
+            <div class="column is-half is-offset-one-quarter">
+                <div class="section">
+                    <a href="/mypage" class="btn btn-sm btn-success">
+                       Home
+                    </a>
+                    <a href="/logout" class="btn btn-sm btn-success">
+                        logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

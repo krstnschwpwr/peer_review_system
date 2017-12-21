@@ -122,6 +122,7 @@ def save_rating():
         rat = bl.rating
         bl.rating = rating
         db.session.commit()
+        return render_template('thanks.html')
     return render_template('admin.html')
 
 
