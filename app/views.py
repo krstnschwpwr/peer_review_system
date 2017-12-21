@@ -89,7 +89,10 @@ def logout():
 @login_required
 def index():
     myreviews = Reviewer.query.filter(Reviewer.reviewer_id == current_user.id).first()
-    mypapers = Paper.query.filter(Paper.id == myreviews.paper_id).all()
+    if myreviews is None:
+        mypapers = ""
+    else:
+        mypapers = Paper.query.filter(Paper.id == myreviews.paper_id).all()
     if 'username' in session:
         username = session['username']
     return render_template('mypage.html', mypapers=mypapers)

@@ -1,6 +1,26 @@
 {% extends "layout/base.html" %}
 
-{% block title %} Papers to Review {% endblock %}
+
+{% block navbar %}
+<nav class="navbar is-transparent">
+    <div class="navbar-brand">
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <a class="navbar-item" href="/admin">
+                    Admin
+                </a>
+                <a class="navbar-item" href="/logout">
+                    Log out </a>
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block title %} Reviewed Papers {% endblock %}
 
 {% block content %}
 <div class="container">
