@@ -3,13 +3,13 @@ from app import db
 
 from app.models import User, Paper
 
-user = User(name="admin", email="admin@admin.com", password="admin")
-db.session.add(user)
-db.session.commit()
-
-user1 = User(name="user", email="user@user.com", password="user")
-db.session.add(user1)
-db.session.commit()
+# user = User(name="admin", email="admin@admin.com", password="admin")
+# db.session.add(user)
+# db.session.commit()
+#
+# user1 = User(name="user", email="user@user.com", password="user")
+# db.session.add(user1)
+# db.session.commit()
 
 paper = Paper(title="Organizing Your Social Sciences Research Paper: 3. The Abstract",
               abstract="Sometimes your professor will ask you to include an abstract, "

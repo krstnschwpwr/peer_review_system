@@ -124,12 +124,15 @@ def get_user(id):
 @app.route('/mypage/rating/save', methods=['GET', 'POST'])
 def save_rating():
     if request.method == 'POST':
-        rating = request.form.get('rating')
-        paper_id = request.form.get('paper_id')
+        rating = int(request.form.get('rating'))
+        paper_id = int(request.form.get('paper_id'))
         bl = Reviewer.query.filter_by(reviewer_id=current_user.id, paper_id=paper_id).first()
         bl.rating = rating
-        paper = Paper.query.filter(id == paper_id)
-        paper.rating += rating
+        paper = Paper.query.filter_by(id=paper_id).first()
+        if paper.rating is not None:
+            paper.rating = (paper.rating + rating)
+        else:
+            paper.rating = rating
         db.session.commit()
     return redirect('mypage')
 
@@ -140,7 +143,7 @@ def show_submissions():
     papers = []
     users = []
     rating = []
-    all_reviews = Reviewer.query.filter(Reviewer.rating != None).all()
+    all_reviews = Reviewer.query.filter(Reviewer.rating != None, )all()
 
     for a in all_reviews:
         papers.append(Paper.query.filter_by(id=a.paper_id).first())
