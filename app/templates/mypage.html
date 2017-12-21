@@ -23,8 +23,8 @@
 {% endblock %}
 
 {% block content %}
-<h4 class="title">Hi {{ current_user.name }} !</h4>
-
+    <h4 class="title">Hi {{ current_user.name }} !</h4>
+<span id="userid" style="visibility: hidden;">{{ current_user.id }}</span>
 <section class="section-components mypage">
 
     <div class="text-primary">

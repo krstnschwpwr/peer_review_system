@@ -63,16 +63,16 @@ def login():
 
 
 @app.route("/admin")
-# @login_required
+@login_required
 def admin():
-    paper = Paper.query.all()
+    if current_user.name == "admin":
+        paper = Paper.query.all()
 
-    form = ReviewerForm()
-    users = User.query.all()
-    user_id = request.form.get('dropdown')
+        form = ReviewerForm()
+        users = User.query.filter(User.name != "admin")
+        user_id = request.form.get('dropdown')
 
-    # form.all_users.choices = users.i
-    return render_template('admin.html', user_id=user_id, form=form, paper=paper, users=users)
+        return render_template('admin.html', user_id=user_id, form=form, paper=paper, users=users)
 
 
 @app.route("/logout")
@@ -100,7 +100,7 @@ def index():
                 mypapers.append(Paper.query.filter(Paper.id == a.paper_id).first())
     if 'username' in session:
         username = session['username']
-    return render_template('mypage.html', mypapers=mypapers)
+    return render_template('mypage.html', mypapers=mypapers, user=current_user)
 
 
 # User
@@ -122,6 +122,7 @@ def get_user(id):
 
 # Rating
 @app.route('/mypage/rating/save', methods=['GET', 'POST'])
+@login_required
 def save_rating():
     if request.method == 'POST':
         rating = int(request.form.get('rating'))
@@ -139,17 +140,32 @@ def save_rating():
 
 # Submission
 @app.route('/submissions', methods=['GET', 'POST'])
+@login_required
 def show_submissions():
-    papers = []
-    users = []
-    rating = []
-    all_reviews = Reviewer.query.filter(Reviewer.rating != None, )all()
+
+    papersAndUsers = {'papers': [], 'users': []}
+    all_reviews = Reviewer.query.filter(Reviewer.rating is not None).all()
 
     for a in all_reviews:
-        papers.append(Paper.query.filter_by(id=a.paper_id).first())
-        users.append(User.query.filter_by(id=a.reviewer_id).first())
+        papersAndUsers['papers'].append(Paper.query.filter_by(id=a.paper_id, status="under review").first())
+        papersAndUsers['users'].append(User.query.filter_by(id=a.reviewer_id).first())
 
-    return render_template('submission.html', fetch=papers, users=users)
+    return render_template('submission.html', fetch=papersAndUsers)
+
+
+# Submission
+@app.route('/status/save', methods=['GET', 'POST'])
+@login_required
+def save_submission_status():
+
+    status = request.form.get('status')
+    paper_id = int(request.form.get('paper_id'))
+
+    paper = Paper.query.filter(Paper.id == paper_id).first()
+    paper.status = status
+    db.session.commit()
+
+    return redirect('submissions')
 
 
 # Reviews
@@ -170,6 +186,7 @@ def save_review():
 
 
 @app.route('/api/reviews', methods=['GET'])
+@login_required
 def get_reviews():
     reviewers = Reviewer.query.all()
     return jsonify(reviewers=reviewers_schema.dump(reviewers).data)
@@ -225,6 +242,17 @@ def get_paper(paper_id):
     if not paper:
         abort(404)
     return jsonify(paper_schema.dump(paper).data)
+
+
+@app.route('/api/papers/for-user/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+def get_paper_by_user(user_id):
+    paper = Paper.query.filter(Paper.author_id == user_id).all()
+    if not paper:
+        abort(404)
+    return jsonify(papers=papers_schema.dump(paper).data)
+
+
 
 
 @app.route('/api/paper/delete/<int:paper_id>', methods=['GET', 'POST'])

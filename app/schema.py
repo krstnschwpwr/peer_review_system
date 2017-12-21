@@ -11,6 +11,7 @@ class PaperSchema(ma.ModelSchema):
     class Meta:
         model = Paper
 
+
 class ReviewerSchema(ma.ModelSchema):
     class Meta:
         model = Reviewer

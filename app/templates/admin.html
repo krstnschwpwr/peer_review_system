@@ -59,10 +59,11 @@
                         <h1>Reviewer</h1>
                         <select name="dropdown">
                             {% for u in users %}
-                            <option value="{{ u.id }}">
-                                {{ u.name }}
-                            </option>
-
+                                {% if p.author_id != u.id %}
+                                    <option value="{{ u.id }}">
+                                    {{ u.name }}
+                                    </option>
+                                {% endif %}
                             {% endfor %}
 
                             <input type="hidden" value="{{p.id}}" name="paper_id">

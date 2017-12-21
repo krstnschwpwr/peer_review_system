@@ -1,15 +1,14 @@
-
 from app import db
 
 from app.models import User, Paper
 
-# user = User(name="admin", email="admin@admin.com", password="admin")
-# db.session.add(user)
-# db.session.commit()
-#
-# user1 = User(name="user", email="user@user.com", password="user")
-# db.session.add(user1)
-# db.session.commit()
+user = User(name="admin", email="admin@admin.com", password="admin")
+db.session.add(user)
+db.session.commit()
+
+user1 = User(name="user", email="user@user.com", password="user")
+db.session.add(user1)
+db.session.commit()
 
 paper = Paper(title="Organizing Your Social Sciences Research Paper: 3. The Abstract",
               abstract="Sometimes your professor will ask you to include an abstract, "
@@ -23,7 +22,7 @@ paper = Paper(title="Organizing Your Social Sciences Research Paper: 3. The Abst
                        "your abstract was the only part of the paper you could access, would you be happy with "
                        "the amount of information presented there? Does it tell the whole story about your study? "
                        "If the answer is no then the abstract likely needs to be revised.",
-              status="Under Review", author_id=1)
+              author_id=2)
 db.session.add(paper)
 db.session.commit()
 
@@ -35,7 +34,7 @@ paper1 = Paper(title="A Research on Cloud Computing Security",
                         "challenges from cloud security, many state-of-the-art technical solutions, e.g., continuation "
                         "protection mechanism, IDM, data security, and virtualization security are discussed. Finally, "
                         "best practices on perspective of operator are summarized and a conclusion is conducted.",
-               status="Under Review", author_id=1)
+               author_id=2)
 db.session.add(paper1)
 db.session.commit()
 
@@ -63,7 +62,7 @@ paper2 = Paper(title="CyberCSP: Integrating cybersecurity into the computer scie
                         "New York. The paper discusses the background, details of the earlier CSP course, how relevant "
                         "cybersecurity content was identified, and then integrated into the CSP course to create the "
                         "CyberCSP varia- t of the Computer Science Principles course.",
-               status="Under Review", author_id=1)
+               author_id=2)
 db.session.add(paper2)
 db.session.commit()
 
@@ -83,7 +82,7 @@ paper3 = Paper(title="« Prev Back to Results | Next A study of students' progre
                         "repeat the CS1, CS2, and CS3 courses, and their success. Analysis is done by following the "
                         "students up until graduation. An analysis is also made to determine how courses tend to "
                         "predict the graduation success rate.",
-               status="Under Review", author_id=1)
+               author_id=2)
 db.session.add(paper3)
 db.session.commit()
 
@@ -110,6 +109,6 @@ paper4 = Paper(title="Analysis of the teaching-learning methodology adopted in t
                         "studied, 63% of students reported satisfaction with the classes taken, however a significant "
                         "number of students 37% reported dissatisfaction with assessment practices and the dynamics of "
                         "the classes.",
-               status="Under Review", author_id=1)
+               author_id=2)
 db.session.add(paper4)
 db.session.commit()

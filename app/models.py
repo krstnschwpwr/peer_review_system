@@ -44,15 +44,14 @@ class Paper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     abstract = db.Column(db.String, nullable=False)
-    status = db.Column(db.String(255), nullable=True)
+    status = db.Column(db.String(255), nullable=True, default="under review")
     author_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=True)
 
-    def __init__(self, title, abstract, author_id, status):
+    def __init__(self, title, abstract, author_id):
         self.title = title
         self.abstract = abstract
         self.author_id = author_id
-        self.status = None
 
     def __repr__(self):
         return '<Paper:{}>'.format(self.title)
