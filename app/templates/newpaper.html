@@ -1,55 +1,64 @@
 {% extends "layout/base.html" %}
 
 {% block title %}
-    {% if current_user.is_authenticated %}
-        <div class="columns">
-            <div class="column">
-                <a class="button is-link" href="/mypage">Mypage</a>
-            </div>
-            <div class="column">
-                <a class="button is-link">Create New Paper</a>
-            </div>
-            <div class="column">
-                <a class="button is-link" href="/logout">Logout</a>
-            </div>
+{% endblock %}
+{% block navbar %}
+{% if current_user.is_authenticated %}
 
+<nav class="navbar is-transparent">
+    <div class="navbar-brand">
+        <div id="navbarExampleTransparentExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                    Home
+                </a>
+                <a class="navbar-item" href="/paper/new">
+                    Create New Paper
+                </a>
+                <a class="navbar-item" href="/logout">
+                    Log out </a>
+            </div>
         </div>
-    {% endif %}
+    </div>
+</nav>
+
+{% endif %}
 {% endblock %}
 
+
 {% block content %}
-    <section class="section-components">
+<section class="section-components">
 
-        <br/>
-        <br/>
-        <form class="form-signin" role="form" method="post" action="">
-            {{ form.csrf_token }}
+    <br/>
+    <br/>
+    <form class="form-signin" role="form" method="post" action="">
+        {{ form.csrf_token }}
 
-            {{ form.title(placeholder="Title") }}
-            <span class="error">
+        {{ form.title(placeholder="Title") }}
+        <span class="error">
       {% if form.title.errors %}
           {% for error in form.title.errors %}
               {{ error }}
           {% endfor %}
       {% endif %}
     </span>
-            </p>
-            <p>
-                {{ form.abstract(placeholder="What's the paper about?") }}
-                <span class="error">
+        </p>
+        <p>
+            {{ form.abstract(placeholder="What's the paper about?") }}
+            <span class="error">
       {% if form.abstract.errors %}
           {% for error in form.abstract.errors %}
               {{ error }}
           {% endfor %}
       {% endif %}
     </span>
-                {{ form.status }}
-            </p>
-            <button class="btn btn-sm btn-success" type="submit">Add New Paper</button>
-        </form>
+            {{ form.status }}
+        </p>
+        <button class="btn btn-sm btn-success" type="submit">Add New Paper</button>
+    </form>
 
 
-    </section>
+</section>
 {% endblock %}
 
 
