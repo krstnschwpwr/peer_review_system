@@ -88,11 +88,16 @@ def logout():
 @app.route('/mypage', methods=['GET'])
 @login_required
 def index():
-    myreviews = Reviewer.query.filter(Reviewer.reviewer_id == current_user.id).first()
+    mypapers = []
+    myreviews = Reviewer.query.filter(Reviewer.reviewer_id == current_user.id).all()
     if myreviews is None:
         mypapers = ""
+
     else:
-        mypapers = Paper.query.filter(Paper.id == myreviews.paper_id).all()
+
+        for a in myreviews:
+            if a.rating is None:
+                mypapers.append(Paper.query.filter(Paper.id == a.paper_id).first())
     if 'username' in session:
         username = session['username']
     return render_template('mypage.html', mypapers=mypapers)
@@ -122,11 +127,9 @@ def save_rating():
         rating = request.form.get('rating')
         paper_id = request.form.get('paper_id')
         bl = Reviewer.query.filter_by(reviewer_id=current_user.id, paper_id=paper_id).first()
-        rat = bl.rating
         bl.rating = rating
         db.session.commit()
-        return render_template('thanks.html')
-    return render_template('admin.html')
+    return redirect('mypage')
 
 
 # Submission
@@ -180,7 +183,7 @@ def save_page():
             title = paper_form.title.data
             abstract = paper_form.abstract.data
             status = request.form.get('status')
-            paper = Paper(title, abstract, status="Under Review")
+            paper = Paper(title, abstract, status="Under Review", author_id=current_user.id)
             db.session.add(paper)
             db.session.commit()
             flash('Paper successfully added')

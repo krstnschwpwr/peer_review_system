@@ -27,7 +27,10 @@
 
 
     <h2 class="title is-8"> Submitted Papers</h2>
+      {% for u in fetch %}
+                            {% for k in users %}
     <div class="columns">
+
         <div class="column">
             <div class="box">
                 <article class="media">
@@ -38,16 +41,14 @@
                         <div class="column is-narrow"></div>
                         <form class="" role="form" method="post" action="{{ url_for('show_submissions') }}">
 
-                            {% for u in fetch %}
-                            {% for k in users %}
-                            <strong><p class="subtitle is-8">Paper from</strong> <br>
+
+                            <strong><p class="subtitle is-8">Paper submission from</strong> <br>
                             <small>{{k.name}}</small>
                             </p><br>
 
                             {{u.title}}
                             {{u.abstract}}
-                            {% endfor %}
-                            {% endfor %}
+
 
 
                             <div class="column">
@@ -72,6 +73,8 @@
         </div>
 
     </div>
+      {% endfor %}
+                            {% endfor %}
 
 
 </div>

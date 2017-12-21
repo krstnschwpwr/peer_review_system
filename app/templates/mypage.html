@@ -36,13 +36,16 @@
     </div>
     <div class="review">
         <h2 class="title is-8"> Papers to review</h2>
+
         <div class="columns">
+
             <div class="column">
+                  {% for my in mypapers%}
                 <div class="box">
                     <article class="media">
                         <div class="media-content clearfix">
                             <div class="content">
-                                {% for my in mypapers%}
+
                                 <p>
                                     <small>{{my.status}}</small>
                                 <h4 class="subtitle is-5 is-bold"> {{ my.title }}</h4>
@@ -67,10 +70,10 @@
                         <div class="column"></div>
                     </article>
                 </div>
+                       {% endfor %}
             </div>
-            <div class="column">
-            </div>
-            {% endfor %}
+
+
         </div>
     </div>
 

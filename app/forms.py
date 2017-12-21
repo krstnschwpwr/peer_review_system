@@ -32,7 +32,6 @@ class UserForm(Form):
 
 
 class ReviewerForm(Form):
-    review_ids = User.query.all()
     paper_id = IntegerField('Id', validators=[InputRequired])
-    reviewer_id = SelectField('Reviewer Id', choices=review_ids)
+   # reviewer_id = SelectField('Reviewer Id', choices=review_ids)
 
