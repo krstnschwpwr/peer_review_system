@@ -11,7 +11,7 @@
                 <a class="navbar-item" href="/paper/new">
                     Create New Paper
                 </a>
-                <a class="navbar-item" href="/logout">
+                <a class="navbar-item" href="/">
                     Log out </a>
             </div>
         </div>
@@ -19,14 +19,11 @@
 </nav>
 {% endblock %}
 {% endif %}
-{% block title %}
+{% block title %}Hi {{ current_user.name }} !
 {% endblock %}
 
 {% block content %}
-    <h4 class="title">Hi {{ current_user.name }} !</h4>
 <span id="userid" style="visibility: hidden;">{{ current_user.id }}</span>
-<section class="section-components mypage">
-
     <div class="text-primary">
         <h3 class="title is-8"> My Papers</h3>
         <div class="mypapers">
@@ -45,8 +42,6 @@
                     <article class="media">
                         <div class="media-content clearfix">
                             <div class="content">
-
-                                <p>
                                 <h4 class="subtitle is-5 is-bold"> {{ my.title }}</h4>
                                 <br>
                                 {{ my.abstract }}
@@ -54,11 +49,11 @@
                             </div>
                             <div class="column is-narrow"></div>
                             <form class="is-one-fifth" role="form" method="post" action="{{ url_for('save_rating') }}">
+                                <h1 class="subtitle">My Rating</h1>
                                 <select name="rating">
-                                    <h1>My Rating</h1>
                                     <option value="-2">-2</option>
                                     <option value="-1">-1</option>
-                                    <option value="0">0</option>
+                                    <option value="0" selected="selected">0</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>
@@ -77,7 +72,6 @@
     </div>
 
 
-</section>
 {% endblock %}
 
 

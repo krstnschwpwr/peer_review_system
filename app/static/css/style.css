@@ -23,3 +23,8 @@ select{ width: 50%;}
 .hero.is-primary.is-bold{ min-height: 20em;}
 article .button{ margin-right: 1em;}
 .hero.is-primary .title{ text-transform: uppercase; letter-spacing: 1px; font-size: 3.9em; margin: 2em auto;}
+
+
+.tag {
+    margin-bottom: 0.5em;
+}

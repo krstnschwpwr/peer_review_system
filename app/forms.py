@@ -8,8 +8,6 @@ from app.models import User
 review_status = [('Under Review', 'Under Review'), ('Accepted', 'Accepted'),('Rejected', 'Rejected')]
 
 
-
-
 class RegisterForm(Form):
     name = StringField('Name', validators=[InputRequired()])
     email = StringField('Email', validators=[InputRequired()])
@@ -24,7 +22,6 @@ class LoginForm(Form):
 class PaperForm(Form):
     title = StringField('title', validators=[InputRequired()])
     abstract = TextAreaField('abstract', validators=[InputRequired()])
-    status = SelectField('Status', choices=review_status)
 
 
 class UserForm(Form):

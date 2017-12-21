@@ -1,5 +1,5 @@
 from app import app, db
-from flask import render_template, request, redirect, g, url_for, flash, jsonify, json, abort, make_response
+from flask import render_template, request, redirect, url_for, jsonify, abort
 from flask_login import login_user, login_required, logout_user, current_user, session
 from app.forms import RegisterForm, LoginForm, PaperForm, ReviewerForm
 from app.models import User, bcrypt, Paper, Reviewer
@@ -29,9 +29,7 @@ def register():
             db.session.add(user)
             db.session.commit()
             login_user(user)
-            flash('User successfully added')
             return redirect(url_for('home'))
-            flash_errors(user_form)
 
     return render_template('register.html', form=user_form)
 
@@ -174,7 +172,7 @@ def save_submission_status():
 def save_review():
 
     if request.method == 'POST':
-        paper_id = request.form.get('paper_id')
+        paper_id = int(request.form.get('paper_id'))
         paper = Paper.query.filter(id == paper_id)
         paper.status = "under review"
         review = Reviewer(paper_id=paper_id, reviewer_id=request.form.get('dropdown'))
@@ -204,11 +202,9 @@ def save_page():
             # Get validated data from form
             title = paper_form.title.data
             abstract = paper_form.abstract.data
-            status = request.form.get('status')
-            paper = Paper(title, abstract, status="Under Review", author_id=current_user.id)
+            paper = Paper(title, abstract, author_id=current_user.id)
             db.session.add(paper)
             db.session.commit()
-            flash('Paper successfully added')
         return redirect('mypage')
 
     return render_template('newpaper.html', form=paper_form)
@@ -251,8 +247,6 @@ def get_paper_by_user(user_id):
     if not paper:
         abort(404)
     return jsonify(papers=papers_schema.dump(paper).data)
-
-
 
 
 @app.route('/api/paper/delete/<int:paper_id>', methods=['GET', 'POST'])
