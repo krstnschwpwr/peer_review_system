@@ -2,6 +2,7 @@ from flask import Flask, g
 from flask.ext.bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
+from db_create import create_db
 #from flask_restful import Api, Resource
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from flask_marshmallow import Marshmallow
@@ -42,6 +43,7 @@ app.config.from_object(__name__)
 from app import views
 from app.models import User
 
+create_db()
 
 
 
