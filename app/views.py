@@ -130,10 +130,13 @@ def save_rating():
 @app.route('/submissions', methods=['GET', 'POST'])
 def show_submissions():
     papers = []
+    users = []
     all_reviews = Reviewer.query.filter(Reviewer.rating != None).all()
+
     for a in all_reviews:
         papers.append(Paper.query.filter_by(id=a.paper_id).first())
-    return render_template('submission.html', fetch=papers)
+        users.append(User.query.filter_by(id=a.reviewer_id).first())
+    return render_template('submission.html', fetch=papers, users=users)
 
 
 # Reviews
