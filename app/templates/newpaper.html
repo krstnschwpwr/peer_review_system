@@ -12,8 +12,8 @@
                 <a class="navbar-item" href="/">
                     Home
                 </a>
-                <a class="navbar-item" href="/paper/new">
-                    Create New Paper
+                <a class="navbar-item" href="/mypage">
+                    Mypage
                 </a>
                 <a class="navbar-item" href="/logout">
                     Log out </a>
@@ -41,12 +41,6 @@
                                   {{ form.csrf_token }}
                                 <p>
                                 <h4 class="subtitle is-5"> {{ form.title(placeholder="Title") }}</h4>
-                                <select name="status">
-                                    <option value="Under Review">Under Review</option>
-                                    <option value="Accepted">Accepted</option>
-                                    <option value="Rejected">Rejected</option>
-
-                                </select>
                                 <span class="error">
                               {% if form.title.errors %}
                                   {% for error in form.title.errors %}

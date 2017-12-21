@@ -44,13 +44,13 @@ class Paper(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     abstract = db.Column(db.String, nullable=False)
-    status = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(255), nullable=True)
     author_id = db.Column(db.Integer, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
 
-    def __init__(self, title, abstract, status, author_id):
+    def __init__(self, title, abstract, author_id):
         self.title = title
         self.abstract = abstract
-        self.status = status
         self.author_id = author_id
 
     def __repr__(self):
@@ -65,7 +65,7 @@ class Reviewer(db.Model):
     reviewer_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer, nullable=True)
 
-    def __init__(self, paper_id, reviewer_id, rating):
+    def __init__(self, paper_id, reviewer_id):
         self.paper_id = paper_id
         self.reviewer_id = reviewer_id
         self.rating = None

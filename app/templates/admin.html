@@ -38,15 +38,16 @@
 {% endif %}
 {% endwith %}
 
-<div class="columns">
+
     {% for p in paper %}
+<div class="columns">
     <div class="column">
         <div class="box">
             <article class="media">
                 <div class="media-content">
                     <div class="content">
-                        <p>
-                            <small>{{p.status}}</small>
+                        <p>Author ID:
+                            <small>{{p.author_id}}</small>
                         <h4 class="subtitle is-5"> {{ p.title }}</h4>
                         <br>
                         {{ p.abstract }}
@@ -55,8 +56,8 @@
                     <div class="column is-narrow"></div>
                     <form class="is-one-fifth" role="form" method="post"
                           action="{{ url_for('save_review') }}">
+                        <h1>Reviewer</h1>
                         <select name="dropdown">
-                            <h1>Reviewer</h1>
                             {% for u in users %}
                             <option value="{{ u.id }}">
                                 {{ u.name }}
@@ -73,8 +74,8 @@
             </article>
         </div>
     </div>
-    {% endfor %}
 </div>
+    {% endfor %}
 
 
 {% endblock %}

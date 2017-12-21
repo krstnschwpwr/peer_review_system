@@ -128,6 +128,8 @@ def save_rating():
         paper_id = request.form.get('paper_id')
         bl = Reviewer.query.filter_by(reviewer_id=current_user.id, paper_id=paper_id).first()
         bl.rating = rating
+        paper = Paper.query.filter(id == paper_id)
+        paper.rating += rating
         db.session.commit()
     return redirect('mypage')
 
@@ -137,11 +139,13 @@ def save_rating():
 def show_submissions():
     papers = []
     users = []
+    rating = []
     all_reviews = Reviewer.query.filter(Reviewer.rating != None).all()
 
     for a in all_reviews:
         papers.append(Paper.query.filter_by(id=a.paper_id).first())
         users.append(User.query.filter_by(id=a.reviewer_id).first())
+
     return render_template('submission.html', fetch=papers, users=users)
 
 
@@ -149,19 +153,17 @@ def show_submissions():
 @app.route('/review/new', methods=['GET', 'POST'])
 @login_required
 def save_review():
-    paper = Paper.query.all()
-
-    form = ReviewerForm()
-    users = User.query.all()
 
     if request.method == 'POST':
         paper_id = request.form.get('paper_id')
-        review = Reviewer(paper_id=paper_id, reviewer_id=request.form.get('dropdown'), rating=10)
+        paper = Paper.query.filter(id == paper_id)
+        paper.status = "under review"
+        review = Reviewer(paper_id=paper_id, reviewer_id=request.form.get('dropdown'))
         db.session.add(review)
         db.session.commit()
     # return (str(user_id))  #
 
-    return render_template('admin.html', form=form, users=users)
+    return redirect('admin')
 
 
 @app.route('/api/reviews', methods=['GET'])
